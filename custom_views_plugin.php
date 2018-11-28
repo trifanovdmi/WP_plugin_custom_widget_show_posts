@@ -7,23 +7,24 @@ Author: Trifanov Dmitriy
 */
 ?>
 <?php
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
-    die('You are not allowed to call this page directly.');
+if ( preg_match('#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF']) ) {
+    die( 'You are not allowed to call this page directly.' );
 }
 
-$currentDir = dirname(__FILE__);
+$currentDir = dirname( __FILE__ );
 
-define('WIDGET_ATTACHMENTS_DIR', $currentDir);
-define('WIDGET_ATTACHMENTS_VERSION', '0.1');
+define( 'WIDGET_ATTACHMENTS_DIR', $currentDir );
+define( 'WIDGET_ATTACHMENTS_VERSION', '0.1' );
 
-$pluginName = plugin_basename(WIDGET_ATTACHMENTS_DIR);
-$pluginUrl  = trailingslashit(WP_PLUGIN_URL . '/' . $pluginName);
-$assetsUrl  = $pluginUrl . '/assets';
+$pluginName = plugin_basename( WIDGET_ATTACHMENTS_DIR );
+$pluginUrl  = trailingslashit( WP_PLUGIN_URL . '/' . $pluginName );
+$assetsUrl  = $pluginUrl . 'assets';
+
 
 
 function widget_views_admin_init()
 {
-    if ( !function_exists('wp_enqueue_media') ) {
+    if ( !function_exists( 'wp_enqueue_media' ) ) {
 
         function version_warning() {
             echo "
@@ -34,7 +35,7 @@ function widget_views_admin_init()
 
         return;
     }
-    
+
 }
 
 function widget_views_widgets_init()
@@ -43,11 +44,20 @@ function widget_views_widgets_init()
     register_widget( 'WidgetViewsCustom' );
 }
 
-add_action('widgets_init', 'widget_views_widgets_init');
+add_action( 'widgets_init', 'widget_views_widgets_init' );
+
+function widget_views_assects()
+{
+	global $assetsUrl;
+	wp_enqueue_style( 'admin_style', $assetsUrl . '/css/admin-style.css' );
+	wp_enqueue_script( 'admin_script', $assetsUrl . '/js/admin-scripts.js');
+}
+
+add_action('admin_head', 'widget_views_assects');
 
 function widget_views_load_textdomain()
 {
     load_plugin_textdomain( 'widget_views', false, dirname( plugin_basename( __FILE__ ) ) .'/languages/' );
 }
 
-add_action('plugins_loaded', 'widget_views_load_textdomain');
+add_action( 'plugins_loaded', 'widget_views_load_textdomain' );

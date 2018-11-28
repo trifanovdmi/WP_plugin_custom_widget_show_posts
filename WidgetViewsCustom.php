@@ -6,7 +6,7 @@ class WidgetViewsCustom extends WP_Widget {
 		parent::__construct(
 			"widget_views_custom",
 			"Widget views",
-			array("description" => "Custom views show widget.")
+			array( "description" => "Custom views show widget.")
 		);
 		
 	}
@@ -25,6 +25,7 @@ class WidgetViewsCustom extends WP_Widget {
 	    	(!empty($instance['numberposts'])) ? $criteria_post['numberposts'] = $instance['numberposts'] : $criteria_post['numberposts'] = '';
 	    	(!empty($instance['post_status'])) ? $criteria_post['post_status'] = $instance['post_status'] : $criteria_post['post_status'] = '';
 	    }
+
 	 	$posts = get_posts($criteria_post);
 
         require_once WIDGET_ATTACHMENTS_DIR  . '/templates/item_post.php';
@@ -64,13 +65,14 @@ class WidgetViewsCustom extends WP_Widget {
         if(empty($footer)) $footer = $instance['footer'];
         if(empty($post_type)) $post_type = $instance['post_type'];
         if(empty($category)) $category = isset($instance['category']) ? $instance['category'] : '';
-        if(empty($numberposts)) $numberposts = $instance['numberposts'];
+        if(empty($numberposts) || $numberposts == 5) $numberposts = $instance['numberposts'];
         if(empty($post_status)) $post_status = isset($instance['post_status']) ? $instance['post_status'] : '';
 
         /*
         * Fields of widget.
         */
 
+        print "<div class='b-widget-views-form'>";
         //Field title widget.
         $title_id = $this->get_field_id('title');
         $title_name = $this->get_field_name('title');
@@ -92,7 +94,7 @@ class WidgetViewsCustom extends WP_Widget {
         ?>
         <div><input type='checkbox' id='<?php print $show_post_id;?>' name='<?php print $show_post_name;?>' <?php checked( $instance[ 'show_post' ], 'on' ); ?> value='on' >
         <?php
-        print "<label for='".$show_post_id."''>".__('Show content', 'widget_views')."</label></div>";
+        print "<label class='label-checkbox' for='".$show_post_id."''>".__('Show content', 'widget_views')."</label></div>";
         
         //Field post type.
         $post_type_id = $this->get_field_id('post-type');
@@ -153,6 +155,8 @@ class WidgetViewsCustom extends WP_Widget {
 
         print "<div><label for='".$footer_id."''>".__('Footer widget', 'widget_views')."</label>";
         print "<input type='text' id='".$footer_id."' name='".$footer_name."' value='".$footer."'></div>";
+
+        print "</div>";
 
     }
 

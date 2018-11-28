@@ -1,0 +1,24 @@
+.b-widget-views-form label {
+	display: block;
+	font-size: 16px;
+	color: #000;
+	
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.b-widget-views-form input:not([type='checkbox']), .b-widget-views-form select {
+	width: 100%;
+}
+
+.b-widget-views-form label.label-checkbox {
+	display: inline-block;
+
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.b-widget-views-form > div {
+	margin-top: 10px;
+	margin-bottom: 10px;
+} 
